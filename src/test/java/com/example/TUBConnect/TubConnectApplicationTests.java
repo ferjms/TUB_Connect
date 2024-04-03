@@ -8,6 +8,7 @@ class TubConnectApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("ola");
 	}
 
 }
