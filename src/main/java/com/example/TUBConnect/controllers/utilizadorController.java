@@ -2,6 +2,7 @@ package com.example.TUBConnect.controllers;
 
 import com.example.TUBConnect.models.utilizador;
 import com.example.TUBConnect.repositories.utilizadorRepository;
+import com.example.TUBConnect.services.utilizadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,19 +12,23 @@ import java.util.List;
 @RequestMapping("utilizador")
 public class utilizadorController {
 
+    private final utilizadorService userService;
+
     @Autowired
-    private utilizadorRepository repository;
-    @GetMapping
-    public List<utilizador> getAll(){
+    private utilizadorRepository userRepository;
 
-        List<utilizador> listaUtilizadores = repository.findAll();
-        return listaUtilizadores;
-
+    @Autowired
+    public utilizadorController(utilizadorService userService) {
+        this.userService = userService;
     }
 
+    @GetMapping
+    public List<utilizador> listarUtilizadores() {
+        return userService.listarUtilizadores();
+        }
+
     @PostMapping
-    public void criarUtilizador(@RequestBody utilizador novoUtilizador) {
-        utilizador usuarioCriado = repository.save(novoUtilizador);
-        return;
+    public void criarUtilizador(@RequestBody utilizador user) {
+        utilizadorService.addNewUser(user);
     }
 }
