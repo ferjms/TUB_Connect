@@ -1,15 +1,14 @@
 package com.example.TUBConnect.models;
 
 import jakarta.persistence.*;
-import org.springframework.data.web.PageableDefault;
 
 import java.io.Serializable;
 
 
 
-@Entity(name="utilizador")
-@Table(name="utilizador")
-public class utilizador implements Serializable {
+@Entity
+@Table
+public class Utilizador implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +22,11 @@ public class utilizador implements Serializable {
     private String telefone;
     private long nif;
 
-    public utilizador() {
+    public Utilizador() {
 
     }
 
-    public utilizador(long utilizador_id, String nome, String email, String password, String tipo, String nacionalidade, String idiomaPreferido, String telefone, long nif) {
+    public Utilizador(long utilizador_id, String nome, String email, String password, String tipo, String nacionalidade, String idiomaPreferido, String telefone, long nif) {
         this.utilizador_id = utilizador_id;
         this.nome = nome;
         this.email = email;
@@ -39,7 +38,7 @@ public class utilizador implements Serializable {
         this.nif = nif;
     }
 
-    public utilizador(String nome, String email, String password, String tipo, String nacionalidade, String idiomaPreferido, String telefone, long nif) {
+    public Utilizador(String nome, String email, String password, String tipo, String nacionalidade, String idiomaPreferido, String telefone, long nif) {
         this.nome = nome;
         this.email = email;
         this.password = password;

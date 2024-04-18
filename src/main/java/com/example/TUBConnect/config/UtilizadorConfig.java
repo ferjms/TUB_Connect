@@ -1,7 +1,7 @@
-package com.example.TUBConnect.Config;
+package com.example.TUBConnect.config;
 
-import com.example.TUBConnect.models.utilizador;
-import com.example.TUBConnect.repositories.utilizadorRepository;
+import com.example.TUBConnect.models.Utilizador;
+import com.example.TUBConnect.repositories.UtilizadorRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class utilizadorConfig {
+public class UtilizadorConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(utilizadorRepository repository){
+    CommandLineRunner commandLineRunner(UtilizadorRepository repository){
         return args -> {
-            utilizador joao = new utilizador(
+            Utilizador joao = new Utilizador(
                     "João",
                     "joao@example.com",
                     "joao123",
@@ -24,7 +24,7 @@ public class utilizadorConfig {
                     "913123359",
                     123456789L
             );
-            utilizador joaquim = new utilizador(
+            Utilizador joaquim = new Utilizador(
                     "Joaquim",
                     "joaquim@example.com",
                     "joaquim132",
