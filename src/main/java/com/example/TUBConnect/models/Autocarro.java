@@ -11,6 +11,22 @@ public class Autocarro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long autocarro_id;
 
+    public Autocarro() {
+
+    }
+
+    public Rota getRota() {
+        return rota;
+    }
+
+    public void setRota(Rota rota) {
+        this.rota = rota;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "rota_id") // This column in Autocarro table should match the primary key of Rota
+    private Rota rota;
+
     @Column(name = "capacidade")
     private int capacidade;
 
@@ -20,10 +36,13 @@ public class Autocarro implements Serializable {
     @Column(name = "ativo")
     private boolean ativo;
 
-    public Autocarro() {
+    public Autocarro(Rota rota) {
+        this.rota = rota;
     }
 
-    public Autocarro(int capacidade, String matricula, boolean ativo) {
+
+    public Autocarro(Rota rota, int capacidade, String matricula, boolean ativo) {
+        this.rota = rota;
         this.capacidade = capacidade;
         this.matricula = matricula;
         this.ativo = ativo;

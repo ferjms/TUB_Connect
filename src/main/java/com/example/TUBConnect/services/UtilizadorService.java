@@ -68,4 +68,11 @@ public class UtilizadorService {
 
 
     }
+
+    public Optional<Utilizador> login(String email, String password) {
+        return utilizadorRepository.findByEmailAndPassword(email, password);
+    }
+
+
+
 }
