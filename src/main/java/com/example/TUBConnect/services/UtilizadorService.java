@@ -33,11 +33,12 @@ public class UtilizadorService {
     }
 
     public void apagarUtilizador(Long utilizadorID) {
-           boolean existe = utilizadorRepository.existsById(utilizadorID);
-           if(!existe){
-               throw new IllegalStateException("Utilizador com o id " + utilizadorID + " não existe");
-           }
-           utilizadorRepository.deleteById(utilizadorID);
+        boolean existe = utilizadorRepository.existsById(utilizadorID);
+        if(!existe){
+            throw new IllegalStateException("Utilizador com o id " + utilizadorID + " não existe");
+        }
+        utilizadorRepository.deleteById(utilizadorID);
+
     }
 
 
@@ -49,7 +50,6 @@ public class UtilizadorService {
         if(nome!= null && !nome.isEmpty() && !Objects.equals(utilizador.getNome(),nome)){
             utilizador.setNome(nome);
         }
-
         if(password!= null && !password.isEmpty() && !Objects.equals(utilizador.getPassword(),password)){
             utilizador.setPassword(password);
         }
@@ -66,13 +66,11 @@ public class UtilizadorService {
             utilizador.setTelefone(telefone);
         }
 
+        utilizadorRepository.save(utilizador);
+
 
     }
-
     public Optional<Utilizador> login(String email, String password) {
         return utilizadorRepository.findByEmailAndPassword(email, password);
     }
-
-
-
 }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("tub")
+@RequestMapping("/tub")
 public class UtilizadorController {
 
     private final UtilizadorService utilizadorService;
@@ -28,21 +28,20 @@ public class UtilizadorController {
         this.utilizadorService = utilizadorService;
     }
 
-    @GetMapping
+    @GetMapping("/user/listar")
     public List<Utilizador> listarUtilizadores() {
         return utilizadorService.listarUtilizadores();
         }
 
-    @PostMapping
+    @PostMapping("/user/registar")
     public void criarUtilizador(@RequestBody Utilizador utilizador) {
         utilizadorService.addNewUser(utilizador);
     }
 
-    @DeleteMapping(path = "{utilizadorID}")
+    @DeleteMapping(path = "/user/{utilizadorID}")
     public void apagarUtilizador(@PathVariable("utilizadorID")Long utilizadorID){
         utilizadorService.apagarUtilizador(utilizadorID);
     }
-
 
 
     @PutMapping(path = "{utilizadorID}")
@@ -55,9 +54,10 @@ public class UtilizadorController {
             @RequestParam(required = false)String idiomaPreferido,
             @RequestParam(required = false)String telefone ) {
             utilizadorService.atualizarUtilizador(utilizadorID,nome,password,tipo,nacionalidade,idiomaPreferido,telefone);
+
     }
 
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public ResponseEntity<?> login(@RequestBody Utilizador loginRequest) {
         return utilizadorService.login(loginRequest.getEmail(), loginRequest.getPassword())
                 .map(user -> {
@@ -66,7 +66,12 @@ public class UtilizadorController {
                     response.put("tipoUtilizador", user.getTipo()); // "turista" ou "cliente"
                     return ResponseEntity.ok().body(response);
                 })
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "Invalid credentials")));
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("mensagem de erro", "Credenciais inválidas")));
+    }
+
+    @PostMapping("/user/save")
+    public Utilizador save(@RequestBody Utilizador utilizador){
+        return utilizadorRepository.save(utilizador);
     }
 
 
