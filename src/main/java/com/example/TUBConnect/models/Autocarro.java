@@ -9,7 +9,7 @@ public class Autocarro implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long autocarro_id;
+    private long autocarroId;
 
     public Autocarro() {
 
@@ -24,7 +24,7 @@ public class Autocarro implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "rota_id") // This column in Autocarro table should match the primary key of Rota
+    @JoinColumn(name = "rotaId") // This column in Autocarro table should match the primary key of Rota
     private Rota rota;
 
     @Column(name = "capacidade")
@@ -49,11 +49,11 @@ public class Autocarro implements Serializable {
     }
 
     public long getAutocarroId() {
-        return autocarro_id;
+        return autocarroId;
     }
 
-    public void setAutocarroId(long autocarro_id) {
-        this.autocarro_id = autocarro_id;
+    public void setAutocarroId(long autocarroId) {
+        this.autocarroId = autocarroId;
     }
 
     public int getCapacidade() {

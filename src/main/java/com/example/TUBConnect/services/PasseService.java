@@ -1,9 +1,12 @@
-/*package com.example.TUBConnect.services;
+package com.example.TUBConnect.services;
 
 import com.example.TUBConnect.models.Passe;
+import com.example.TUBConnect.models.Rota;
 import com.example.TUBConnect.models.Utilizador;
 import com.example.TUBConnect.repositories.PasseRepository;
+import com.example.TUBConnect.repositories.RotaRepository;
 import com.example.TUBConnect.repositories.UtilizadorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -14,26 +17,31 @@ public class PasseService {
 
     private final PasseRepository passeRepository;
     private final UtilizadorRepository utilizadorRepository;
+    private final RotaRepository rotaRepository;  // Adicionar esta linha
 
-    public PasseService(PasseRepository passeRepository, UtilizadorRepository utilizadorRepository) {
+    @Autowired // Esta anotação pode ser opcional se você está usando a injeção através do construtor
+    public PasseService(PasseRepository passeRepository, UtilizadorRepository utilizadorRepository, RotaRepository rotaRepository) {
         this.passeRepository = passeRepository;
         this.utilizadorRepository = utilizadorRepository;
+        this.rotaRepository = rotaRepository; // Inicializar no construtor
     }
 
-    public Passe comprarPasse(long utilizadorId, Passe.TipoPasse tipoPasse) {
-        Optional<Utilizador> utilizadorOpt = utilizadorRepository.findById(utilizadorId);
-        if (utilizadorOpt.isPresent() && utilizadorOpt.get().getTipo().equals("cliente")) {
-            Passe passe = new Passe();
-            passe.setUtilizador(utilizadorOpt.get());
-            passe.setTipo(tipoPasse);
-            passe.setData_compra(new Date());
-            passe.setValidade(new Date(System.currentTimeMillis() + 2629746000L)); // 1 mês em milissegundos
-            passe.setEstado(true);
-            return passeRepository.save(passe);
-        } else {
-            throw new RuntimeException("Utilizador não é cliente ou não encontrado");
-        }
+    public Passe comprarPasse(long utilizadorId, Passe.TipoPasse tipoPasse, Long rotaId) {
+        Utilizador utilizador = utilizadorRepository.findById(utilizadorId)
+                .orElseThrow(() -> new RuntimeException("Utilizador não encontrado"));
+        Rota rota = rotaRepository.findById(rotaId)
+                .orElseThrow(() -> new RuntimeException("Rota não encontrada"));
+
+        Passe passe = new Passe();
+        passe.setUtilizador(utilizador);
+        passe.setRota(rota);
+        passe.setTipo(tipoPasse);
+        passe.setData_compra(new Date());
+        passe.setValidade(new Date(System.currentTimeMillis() + 2629746000L)); // 1 mês em milissegundos
+        passe.setEstado(true);
+        return passeRepository.save(passe);
     }
+
 
 
 
@@ -49,11 +57,11 @@ public class PasseService {
         }
     }
 
-  /*  public Optional<Passe> encontrarPassePorUtilizadorId(long utilizadorId) {
-        return passeRepository.findByUtilizador_utilizador_id(utilizadorId);
+   public Optional<Passe> encontrarPassePorUtilizadorId(long utilizadorId) {
+        return passeRepository.findByUtilizador_UtilizadorId(utilizadorId);
     }
 
 
 
 }
- */
+

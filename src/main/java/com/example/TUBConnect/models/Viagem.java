@@ -10,14 +10,14 @@ public class Viagem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long viagem_id;
+    private long viagemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rota_id", nullable = false)
     private Rota rota;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "utilizador_id", nullable = false)
+    @JoinColumn(name = "utilizador_id")
     private Utilizador utilizador;
 
     private String designacao;
@@ -25,19 +25,19 @@ public class Viagem implements Serializable {
     // Construtores, getters e setters
     public Viagem() {}
 
-    public Viagem(long viagem_id, Rota rota, Utilizador utilizador, String designacao) {
-        this.viagem_id = viagem_id;
+    public Viagem(long viagemId, Rota rota, Utilizador utilizador, String designacao) {
+        this.viagemId = viagemId;
         this.rota = rota;
         this.utilizador = utilizador;
         this.designacao = designacao;
     }
 
-    public long getViagem_id() {
-        return viagem_id;
+    public long getViagemId() {
+        return viagemId;
     }
 
-    public void setViagem_id(long viagem_id) {
-        this.viagem_id = viagem_id;
+    public void setViagem_id(long viagemId) {
+        this.viagemId = viagemId;
     }
 
     public Rota getRota() {

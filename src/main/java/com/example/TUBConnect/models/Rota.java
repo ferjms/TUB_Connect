@@ -2,33 +2,54 @@ package com.example.TUBConnect.models;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-import java.util.List;
-
 @Entity
-@Table
-public class Rota implements Serializable {
+@Table(name = "rota")
+public class Rota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long rota_id;
+    @Column(name = "rota_id")
+    private Long rotaId;
 
+    @Column(nullable = false)
+    private String descricao;
 
+    @Column(nullable = false)
+    private String origem;
 
+    @Column(nullable = false)
+    private String destino;
 
-    @OneToMany(mappedBy = "rota") // Esta linha indica que uma rota pode ter muitos autocarros
-    private List<Autocarro> autocarros;
-
-    // Construtores, getters e setters
-
-    // ... (os outros métodos permanecem inalterados)
-
-    // Getters e setters para autocarros
-    public List<Autocarro> getAutocarros() {
-        return autocarros;
+    // Getters e setters
+    public Long getId() {
+        return rotaId;
     }
 
-    public void setAutocarros(List<Autocarro> autocarros) {
-        this.autocarros = autocarros;
+    public void setId(Long rotaId) {
+        this.rotaId = rotaId;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(String origem) {
+        this.origem = origem;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
     }
 }

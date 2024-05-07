@@ -11,10 +11,10 @@ public class Passe implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long passe_id;
+    private long passeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "utilizador_id", referencedColumnName = "utilizador_id", nullable = false)
+    @JoinColumn(name = "utilizador_id")
     private Utilizador utilizador;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,8 +44,8 @@ public class Passe implements Serializable {
     // Construtores, getters e setters
     public Passe() {}
 
-    public Passe(long passe_id, Utilizador utilizador, Rota rota, TipoPasse tipo, Date data_compra, double preco, Date validade, boolean estado) {
-        this.passe_id = passe_id;
+    public Passe(long passeId, Utilizador utilizador, Rota rota, TipoPasse tipo, Date data_compra, double preco, Date validade, boolean estado) {
+        this.passeId = passeId;
         this.utilizador = utilizador;
         this.rota = rota;
         this.tipo = tipo;
@@ -55,12 +55,12 @@ public class Passe implements Serializable {
         this.estado = estado;
     }
 
-    public long getPasse_id() {
-        return passe_id;
+    public long getPasseId() {
+        return passeId;
     }
 
-    public void setPasse_id(long passe_id) {
-        this.passe_id = passe_id;
+    public void setPasse_id(long passeId) {
+        this.passeId = passeId;
     }
 
     public Utilizador getUtilizador() {

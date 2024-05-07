@@ -10,7 +10,7 @@ public class Paragem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paragem_id;
+    private Long paragemId;
     private String descricao;
     private Long distancia;
     private Double latitude;
@@ -21,8 +21,8 @@ public class Paragem implements Serializable {
     public Paragem() {
     }
 
-    public Paragem(Long paragem_id, String descricao, Long distancia, Double latitude, Double longitude) {
-        this.paragem_id=paragem_id;
+    public Paragem(Long paragemId, String descricao, Long distancia, Double latitude, Double longitude) {
+        this.paragemId=paragemId;
         this.descricao = descricao;
         this.distancia = distancia;
         this.latitude = latitude;
@@ -37,11 +37,11 @@ public class Paragem implements Serializable {
     }
 
     public Long getParagem_id() {
-        return paragem_id;
+        return paragemId;
     }
 
     public void setParagem_id(Long paragem_id) {
-        this.paragem_id = paragem_id;
+        this.paragemId = paragemId;
     }
 
     public String getDescricao() {

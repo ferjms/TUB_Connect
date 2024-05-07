@@ -1,60 +1,28 @@
 package com.example.TUBConnect.models;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 
-
-
 @Entity
-@Table
+@Table(name = "utilizador")
 public class Utilizador implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long utilizador_id;
+    @Column(name = "utilizador_id")
+    private long utilizadorId;
     private String nome;
     private String email;
     private String password;
     private String tipo;
     private String nacionalidade;
+    @Column(name = "idioma_preferido")
     private String idiomaPreferido;
+
     private String telefone;
     private long nif;
 
+    // Construtores, getters e setters atualizados para usar utilizadorId
     public Utilizador() {
-
-    }
-
-    public Utilizador(long utilizador_id, String nome, String email, String password, String tipo, String nacionalidade, String idiomaPreferido, String telefone, long nif) {
-        this.utilizador_id = utilizador_id;
-        this.nome = nome;
-        this.email = email;
-        this.password = password;
-        this.tipo = tipo;
-        this.nacionalidade = nacionalidade;
-        this.idiomaPreferido = idiomaPreferido;
-        this.telefone = telefone;
-        this.nif = nif;
-    }
-
-    public Utilizador(String nome, String email, String password, String tipo, String nacionalidade, String idiomaPreferido, String telefone, long nif) {
-        this.nome = nome;
-        this.email = email;
-        this.password = password;
-        this.tipo = tipo;
-        this.nacionalidade = nacionalidade;
-        this.idiomaPreferido = idiomaPreferido;
-        this.telefone = telefone;
-        this.nif = nif;
-    }
-
-    public long getUtilizador_id() {
-        return utilizador_id;
-    }
-
-    public void setUtilizador_id(long utilizador_id) {
-        this.utilizador_id = utilizador_id;
     }
 
     public String getNome() {
@@ -121,10 +89,43 @@ public class Utilizador implements Serializable {
         this.nif = nif;
     }
 
+    public Utilizador(long utilizadorId, String nome, String email, String password, String tipo, String nacionalidade, String idiomaPreferido, String telefone, long nif) {
+        this.utilizadorId = utilizadorId;
+        this.nome = nome;
+        this.email = email;
+        this.password = password;
+        this.tipo = tipo;
+        this.nacionalidade = nacionalidade;
+        this.idiomaPreferido = idiomaPreferido;
+        this.telefone = telefone;
+        this.nif = nif;
+    }
+
+    public Utilizador(String nome, String email, String password, String tipo, String nacionalidade, String idiomaPreferido, String telefone, long nif) {
+        this.nome = nome;
+        this.email = email;
+        this.password = password;
+        this.tipo = tipo;
+        this.nacionalidade = nacionalidade;
+        this.idiomaPreferido = idiomaPreferido;
+        this.telefone = telefone;
+        this.nif = nif;
+    }
+
+    public long getUtilizadorId() {  // Nome do método atualizado
+        return utilizadorId;
+    }
+
+    public void setUtilizadorId(long utilizadorId) {  // Nome do método atualizado
+        this.utilizadorId = utilizadorId;
+    }
+
+    // Outros getters e setters...
+
     @Override
     public String toString() {
-        return "utilizador{" +
-                "utilizador_id=" + utilizador_id +
+        return "Utilizador{" +
+                "utilizadorId=" + utilizadorId +  // Atualizado para utilizadorId
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
