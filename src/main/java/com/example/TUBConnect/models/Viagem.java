@@ -1,59 +1,81 @@
 package com.example.TUBConnect.models;
 
 import jakarta.persistence.*;
-
-import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "viagem")
-public class Viagem implements Serializable {
+public class Viagem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long viagemId;
+    @Column(name = "viagem_id")
+    private Long viagemId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rota_id", nullable = false)
-    private Rota rota;
+    @Column(name = "data_compra")
+    private LocalDate dataCompra;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "utilizador_id")
-    private Utilizador utilizador;
+    private Double preco;
+
+    @Column(name = "utilizador_id")
+    private Long utilizadorId;
+
+    @Column(name = "rota_id")
+    private Long rotaId;
+
+    private Boolean estado;
 
     private String designacao;
 
-    // Construtores, getters e setters
-    public Viagem() {}
+    @Column(name = "coroa", nullable = false)
+    private Integer coroa;  // Armazena o valor numérico da enumeração
 
-    public Viagem(long viagemId, Rota rota, Utilizador utilizador, String designacao) {
-        this.viagemId = viagemId;
-        this.rota = rota;
-        this.utilizador = utilizador;
-        this.designacao = designacao;
-    }
-
-    public long getViagemId() {
+    public Long getViagemId() {
         return viagemId;
     }
 
-    public void setViagem_id(long viagemId) {
+    public void setViagemId(Long viagemId) {
         this.viagemId = viagemId;
     }
 
-    public Rota getRota() {
-        return rota;
+    public LocalDate getDataCompra() {
+        return dataCompra;
     }
 
-    public void setRota(Rota rota) {
-        this.rota = rota;
+    public void setDataCompra(LocalDate dataCompra) {
+        this.dataCompra = dataCompra;
     }
 
-    public Utilizador getUtilizador() {
-        return utilizador;
+    public Double getPreco() {
+        return preco;
     }
 
-    public void setUtilizador(Utilizador utilizador) {
-        this.utilizador = utilizador;
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
+    public Long getUtilizadorId() {
+        return utilizadorId;
+    }
+
+    public void setUtilizadorId(Long utilizadorId) {
+        this.utilizadorId = utilizadorId;
+    }
+
+    public Long getRotaId() {
+        return rotaId;
+    }
+
+    public void setRotaId(Long rotaId) {
+        this.rotaId = rotaId;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     public String getDesignacao() {
@@ -62,5 +84,34 @@ public class Viagem implements Serializable {
 
     public void setDesignacao(String designacao) {
         this.designacao = designacao;
+    }
+
+    public Integer getCoroa() {
+        return coroa;
+    }
+
+    public void setCoroa(Coroa coroa) {
+        this.coroa = coroa.getCoroa();  // Converte a enumeração para o valor inteiro correspondente
+    }
+
+    public enum Coroa {
+        UM(1, 10.0),
+        DOIS(2, 20.0);
+
+        private final int coroa;
+        private final double preco;
+
+        Coroa(int coroa, double preco) {
+            this.coroa = coroa;
+            this.preco = preco;
+        }
+
+        public int getCoroa() {
+            return this.coroa;
+        }
+
+        public double getPreco() {
+            return this.preco;
+        }
     }
 }
