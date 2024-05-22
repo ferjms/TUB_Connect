@@ -24,6 +24,7 @@ public class RotaController {
 
     @PostMapping("/criarRota")
     public Rota createRota(@RequestBody Rota rota) {
+
         return rotaService.saveRota(rota);
     }
 

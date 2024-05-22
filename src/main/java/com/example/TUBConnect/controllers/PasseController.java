@@ -29,8 +29,9 @@ public class PasseController {
         this.passeService = passeService;
     }
 
-    @PostMapping("/comprarPasse/{utilizadorId}/{rotaId}")
-    public ResponseEntity<?> comprarPasse(@PathVariable long utilizadorId, @PathVariable Long rotaId, @RequestBody Passe.TipoPasse tipoPasse) {
+
+    @PostMapping("/comprarPasse/{utilizadorId}/{coroa}")
+    public ResponseEntity<?> comprarPasse(@PathVariable long utilizadorId, @PathVariable int coroa, @RequestBody Passe.TipoPasse tipoPasse) {
         Optional<Utilizador> utilizadorOpt = utilizadorRepository.findById(utilizadorId);
         if (!utilizadorOpt.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilizador não encontrado");
@@ -38,7 +39,7 @@ public class PasseController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Utilizador não é cliente");
         }
         try {
-            Passe passe = passeService.comprarPasse(utilizadorId, tipoPasse, rotaId);
+            Passe passe = passeService.comprarPasse(utilizadorId, tipoPasse, coroa);
             return ResponseEntity.ok(passe);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -49,7 +50,8 @@ public class PasseController {
 
 
 
-    @GetMapping("/passe/{utilizadorId}")
+
+    @GetMapping("/listarPasse/{utilizadorId}")
     public ResponseEntity<?> listarPasse(@PathVariable long utilizadorId) {
         try {
             Optional<Passe> passeOpt = passeService.encontrarPassePorUtilizadorId(utilizadorId);
@@ -60,10 +62,9 @@ public class PasseController {
                 passeInfo.put("tipoPasse", passe.getTipo());
                 passeInfo.put("validade", passe.getValidade());
                 passeInfo.put("estado", passe.isEstado());
-
-                // Verifica se o passe está vencido para indicar se pode ser renovado
-                boolean podeRenovar = !passe.getValidade().before(new Date());
-                passeInfo.put("podeRenovar", podeRenovar);
+                passeInfo.put("coroa", passe.getCoroa());
+                passeInfo.put("data_compra", passe.getDataCompra());
+                passeInfo.put("preco", passe.getPreco());
 
                 return ResponseEntity.ok(passeInfo);
             } else {

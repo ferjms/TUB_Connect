@@ -11,6 +11,7 @@ public class Passe implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "passe_id")
     private long passeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -18,7 +19,7 @@ public class Passe implements Serializable {
     private Utilizador utilizador;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rota_id", nullable = false)
+    @JoinColumn(name = "rota_id")
     private Rota rota;
 
     @Enumerated(EnumType.STRING)
@@ -29,6 +30,10 @@ public class Passe implements Serializable {
     private double preco;
     private Date validade;
     private boolean estado;
+
+    @Column(nullable = false)
+    private int coroa;
+
 
 
 
@@ -42,9 +47,33 @@ public class Passe implements Serializable {
     }
 
     // Construtores, getters e setters
+
+    public Rota getRota() {
+        return rota;
+    }
+
+    public void setRota(Rota rota) {
+        this.rota = rota;
+        this.coroa = rota.getCoroa(); // Atualiza automaticamente a coroa quando a rota é definida
+    }
+
+    public int getCoroa() {
+        return coroa;
+    }
+
+    public void setCoroa(int coroa) {
+        this.coroa = coroa;
+    }
+
+    public Date getDataCompra() {
+        return data_compra;
+    }
+
+    // Construtor padrão
     public Passe() {}
 
-    public Passe(long passeId, Utilizador utilizador, Rota rota, TipoPasse tipo, Date data_compra, double preco, Date validade, boolean estado) {
+    // Construtor parametrizado
+    public Passe(long passeId, Utilizador utilizador, Rota rota, TipoPasse tipo, Date data_compra, double preco, Date validade, boolean estado, int coroa) {
         this.passeId = passeId;
         this.utilizador = utilizador;
         this.rota = rota;
@@ -53,6 +82,7 @@ public class Passe implements Serializable {
         this.preco = preco;
         this.validade = validade;
         this.estado = estado;
+        this.coroa = coroa;
     }
 
     public long getPasseId() {
@@ -71,13 +101,6 @@ public class Passe implements Serializable {
         this.utilizador = utilizador;
     }
 
-    public Rota getRota() {
-        return rota;
-    }
-
-    public void setRota(Rota rota) {
-        this.rota = rota;
-    }
 
     public TipoPasse getTipo() {
         return tipo;

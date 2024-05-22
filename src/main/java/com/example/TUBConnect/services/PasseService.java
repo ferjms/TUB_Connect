@@ -26,16 +26,21 @@ public class PasseService {
         this.rotaRepository = rotaRepository; // Inicializar no construtor
     }
 
-    public Passe comprarPasse(long utilizadorId, Passe.TipoPasse tipoPasse, Long rotaId) {
+    public Passe comprarPasse(long utilizadorId, Passe.TipoPasse tipoPasse, int coroa) {
         Utilizador utilizador = utilizadorRepository.findById(utilizadorId)
                 .orElseThrow(() -> new RuntimeException("Utilizador não encontrado"));
-        Rota rota = rotaRepository.findById(rotaId)
-                .orElseThrow(() -> new RuntimeException("Rota não encontrada"));
+
+        double preco = calcularPrecoPasse(tipoPasse, coroa);
+
+        if (preco < 0) {
+            throw new RuntimeException("Este tipo de passe não é válido para a coroa selecionada.");
+        }
 
         Passe passe = new Passe();
         passe.setUtilizador(utilizador);
-        passe.setRota(rota);
+        passe.setCoroa(coroa); // Configura a coroa diretamente
         passe.setTipo(tipoPasse);
+        passe.setPreco(preco);
         passe.setData_compra(new Date());
         passe.setValidade(new Date(System.currentTimeMillis() + 2629746000L)); // 1 mês em milissegundos
         passe.setEstado(true);
@@ -43,6 +48,22 @@ public class PasseService {
     }
 
 
+    private double calcularPrecoPasse(Passe.TipoPasse tipoPasse, int coroa) {
+        switch (tipoPasse) {
+            case ESTUDANTE:
+                return coroa == 1 ? 20 : -1; // Retorna -1 se for inválido para a coroa
+            case REFORMADO:
+                return 5; // Preço fixo para todas as coroas
+            case FUNCIONARIO:
+                return 0; // Continua a ser gratuito para funcionários
+            case JOVEM_MUNICIPE:
+                return coroa == 2 ? 15 : -1; // Retorna -1 se for inválido para a coroa
+            case PCD:
+                return 10; // Preço fixo para todas as coroas
+            default:
+                throw new IllegalArgumentException("Tipo de passe inválido");
+        }
+    }
 
 
     public Passe renovarPasse(long passeId) {

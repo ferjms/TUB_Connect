@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin(origins = "http://10.0.2.2:8080", allowCredentials = "true")
 @RestController
 @RequestMapping("/tub")
 public class UtilizadorController {
@@ -32,12 +32,12 @@ public class UtilizadorController {
         utilizadorService.addNewUser(utilizador);
     }
 
-    @DeleteMapping(path = "/user/{utilizadorId}")  // Alterado de utilizadorID para utilizadorId
-    public void apagarUtilizador(@PathVariable("utilizadorId") Long utilizadorId) {  // Alterado de utilizadorID para utilizadorId
+    @DeleteMapping(path = "/user/{utilizadorId}")
+    public void apagarUtilizador(@PathVariable("utilizadorId") Long utilizadorId) {
         utilizadorService.apagarUtilizador(utilizadorId);
     }
 
-    @PutMapping(path = "{utilizadorId}")  // Alterado de utilizadorID para utilizadorId
+    @PutMapping(path = "{utilizadorId}")
     public void atualizarUtilizador(
             @PathVariable("utilizadorId") Long utilizadorId,
             @RequestParam(required = false) String nome,
@@ -55,12 +55,9 @@ public class UtilizadorController {
                 .map(user -> {
                     Map<String, String> response = new HashMap<>();
                     response.put("message", "Login successful!");
-                    response.put("tipoUtilizador", user.getTipo());  // "turista" ou "cliente"
+                    response.put("tipoUtilizador", user.getTipo());
                     return ResponseEntity.ok().body(response);
                 })
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("mensagem de erro", "Credenciais inválidas")));
     }
-
-
-
 }

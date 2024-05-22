@@ -20,6 +20,16 @@ public class Rota {
     @Column(nullable = false)
     private String destino;
 
+    @Column(nullable = false)
+    private int coroa;
+
+    public int getCoroa() {
+        return coroa;
+    }
+
+    public void setCoroa(int coroa) {
+        this.coroa = coroa;
+    }
     // Getters e setters
     public Long getId() {
         return rotaId;
